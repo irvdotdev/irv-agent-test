@@ -1,0 +1,19 @@
+{
+  "name": "irv-agent-test",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "tsx verify.ts",
+    "reset": "./runs/reset.sh",
+    "codex": "./runs/codex.sh",
+    "claude": "./runs/claude.sh",
+    "manual": "./runs/manual.sh",
+    "compare": "tsx compare.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+.next/
+results/
+target/.irv-test.json
+target/node_modules/
+target/.next/
+.DS_Store
+*.tsbuildinfo
