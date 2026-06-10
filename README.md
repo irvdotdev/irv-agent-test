@@ -19,7 +19,13 @@ One command. The agent provisions an Irv identity, edits the target Next.js app 
 │   ├── reset.sh               restore target/ to baseline (drops the agent's edits)
 │   ├── codex.sh               invoke Codex CLI with prompt.md
 │   ├── claude.sh              invoke Claude CLI with prompt.md
-│   └── manual.sh              bash version of the same recipe (sanity floor)
+│   ├── manual.sh              bash version of the same recipe (sanity floor)
+│   ├── webhook-receiver.mjs   signature-verifying receiver for irv webhooks (closed loop)
+│   ├── traffic.mjs            synthetic traffic generator (--broken flatlines signups)
+│   ├── break.sh               the demo bug: signup submit → silent no-op (one-token diff)
+│   └── unbreak.sh             revert the bug / confirm the agent's fix
+├── docs/
+│   └── demo-script.md         scene-by-scene plan for the launch video
 ├── verify.ts                  post-run assertions: hits Irv API, reads target/
 ├── results/                   per-run output (gitignored)
 └── package.json
@@ -94,6 +100,34 @@ results/
 ## Sanity floor: `runs/manual.sh`
 
 If both agents fail, run `./runs/manual.sh` — it's pure curl + sed. If the manual recipe also fails, the issue is on Irv's side (or your network / beta key) and the agent harness is fine. If the manual recipe passes but agents fail, the issue is in agent prompting.
+
+## The closed loop (webhooks)
+
+Irv can wake your agent instead of being polled — see `irv.dev/agents` §7.9 + §9E. The harness pieces:
+
+```bash
+# 1. Receiver (verifies X-Irv-Signature, logs to results/webhook-deliveries.jsonl)
+IRV_WEBHOOK_SECRET=whsec_… node runs/webhook-receiver.mjs
+
+# 2. Public tunnel (Vercel can't POST to your localhost)
+cloudflared tunnel --url http://localhost:8787      # or: ngrok http 8787
+
+# 3. Subscribe
+curl -sS -X POST "$IRV_HOST/api/v1/subscriptions" \
+  -H "Authorization: Bearer $IRV_TOKEN" -H "Content-Type: application/json" \
+  -d '{"project_key":"'$IRV_PROJECT_KEY'","url":"https://<tunnel>/","events":["insight.critical"]}'
+
+# 4. Make something worth waking up for
+node runs/traffic.mjs --minutes 15 --rate 20        # healthy baseline
+./runs/break.sh                                      # the one-token bug
+node runs/traffic.mjs --broken --minutes 15          # signups flatline
+curl -sS -X POST "$IRV_HOST/api/v1/insights/refresh?project_key=$IRV_PROJECT_KEY" \
+  -H "Authorization: Bearer $IRV_TOKEN"              # Irv notices → webhook fires
+```
+
+`pnpm verify` includes a subscription create → list → delete round-trip, so the basic plumbing is covered even without a tunnel.
+
+The full scene-by-scene plan for filming this as the launch video: [docs/demo-script.md](docs/demo-script.md).
 
 ## License
 

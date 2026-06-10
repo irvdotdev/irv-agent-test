@@ -168,6 +168,65 @@ async function main() {
     });
   }
 
+  // ---- Webhook subscription round-trip ----
+  // Exercises the closed-loop plumbing end-to-end against the live
+  // API: create (localhost URLs are allowed for dev) → list shows it
+  // with the secret redacted → delete. No events fire in the window,
+  // so the dead localhost URL never even gets a delivery attempt.
+  try {
+    const createRes = await fetch(`${HOST}/api/v1/subscriptions`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${pat}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        project_key,
+        url: "http://localhost:9/irv-verify-roundtrip",
+        events: ["insight.created"],
+      }),
+    });
+    if (!createRes.ok) {
+      checks.push({
+        name: "webhooks: subscription create → list → delete round-trip",
+        pass: false,
+        detail: `create failed: status ${createRes.status}`,
+      });
+    } else {
+      const created = (await createRes.json()) as { id: string; secret?: string };
+      const secretOk = typeof created.secret === "string" && created.secret.startsWith("whsec_");
+
+      const listRes = await fetch(`${HOST}/api/v1/subscriptions`, {
+        headers: { Authorization: `Bearer ${pat}` },
+      });
+      const listed = (await listRes.json()) as {
+        subscriptions?: Array<{ id: string; secret?: string }>;
+      };
+      const mine = listed.subscriptions?.find((s) => s.id === created.id);
+      const redacted = mine !== undefined && !("secret" in (mine as object));
+
+      const delRes = await fetch(`${HOST}/api/v1/subscriptions/${created.id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${pat}` },
+      });
+
+      const pass = secretOk && mine !== undefined && redacted && delRes.ok;
+      checks.push({
+        name: "webhooks: subscription create → list → delete round-trip",
+        pass,
+        detail: pass
+          ? `id=${created.id} · secret whsec_… returned once · redacted in list · deleted`
+          : `secretOk=${secretOk} listed=${mine !== undefined} redacted=${redacted} deleted=${delRes.ok}`,
+      });
+    }
+  } catch (err) {
+    checks.push({
+      name: "webhooks: subscription create → list → delete round-trip",
+      pass: false,
+      detail: `network error: ${(err as Error).message}`,
+    });
+  }
+
   // ---- No secret leakage ----
   // The PAT is allowed to live in target/.irv-test.json (gitignored).
   // The beta key should NOT appear anywhere in target/ or results/.
