@@ -72,7 +72,7 @@ SNIPPET="        <script async src=\"$IRV_HOST/i.js?p=$PROJECT_KEY\" />"
 # Replace the comment-only <head>{ ... }</head> block with one that
 # contains the snippet. Idempotent: if a snippet is already present we
 # don't double-insert.
-if grep -q "irv.dev/i.js\|$IRV_HOST/i.js" target/app/layout.tsx; then
+if grep -qE "i\.js\?p=pk_" target/app/layout.tsx; then
   echo "  · snippet already present — skipping insert"
 else
   # Use perl for portable multi-line edit. Inserts just inside the
