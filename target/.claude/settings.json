@@ -15,6 +15,7 @@
       "Bash(echo:*)",
       "Bash(grep:*)",
       "Bash(node:*)",
+      "Bash(python3:*)",
       "Bash(npm run dev:*)",
       "Bash(pnpm dev:*)",
       "Bash(pnpm run dev:*)"

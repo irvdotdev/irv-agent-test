@@ -4,8 +4,15 @@ Host: `$IRV_HOST` (defaults to https://irv.dev).
 
 Constraints
 
-- Never echo `IRV_BETA_KEY` or the provisioned PAT to stdout. They are secrets.
-- Don't commit `target/.irv-test.json` — it's gitignored by design and contains the PAT.
+- This run is NON-INTERACTIVE: nobody can answer questions or approve
+  extra permissions. If a tool call is denied, do not ask — fall back
+  to the pre-approved tools: file Read/Write/Edit, and Bash limited to
+  `curl`, `jq`, `node`, `python3`, `date`, `sleep`, `cat`, `echo`,
+  `grep`, and the dev-server commands. `curl … | jq` covers every API
+  step in this recipe.
+- Never echo `IRV_BETA_KEY` or the provisioned PAT to stdout. They are
+  secrets. (Writing the PAT into `target/.irv-test.json` is required
+  and fine — the file is gitignored.)
 - Don't add the snippet manually before doing step 1. Provisioning gives you the project key — use the real one.
 - Do everything from inside `target/` unless explicitly told otherwise.
 
