@@ -31,6 +31,7 @@ echo "✓ Removed target/.irv-test.json (if present)"
 # 3. Drop any agent-created files in target/ root that aren't supposed
 #    to be there. Whitelist what we keep; anything else gets nuked.
 KEEP=(
+  ".claude"
   "app"
   "public"
   "node_modules"

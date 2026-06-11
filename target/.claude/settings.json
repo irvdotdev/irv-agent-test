@@ -1,0 +1,23 @@
+{
+  "//": "Scoped allowlist for unattended agent runs in THIS fixture dir only. The harness invokes `claude --print` with cwd=target/, so these grants apply to the demo app sandbox — not your machine generally. Deliberately narrower than --dangerously-skip-permissions: file edits are confined to the project, and Bash is limited to the commands the onboarding recipe needs.",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash(curl:*)",
+      "Bash(jq:*)",
+      "Bash(date:*)",
+      "Bash(sleep:*)",
+      "Bash(cat:*)",
+      "Bash(echo:*)",
+      "Bash(grep:*)",
+      "Bash(node:*)",
+      "Bash(npm run dev:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm run dev:*)"
+    ]
+  }
+}
