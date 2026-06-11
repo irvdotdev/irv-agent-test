@@ -29,7 +29,7 @@ echo ""
 
 # --- 1. Provision ---
 echo "[1/5] Provisioning..."
-PROVISION_JSON=$(curl -sS -X POST "$IRV_HOST/api/v1/agent-beta/provision" \
+PROVISION_JSON=$(curl -sSL -X POST "$IRV_HOST/api/v1/agent-beta/provision" \
   -H "Authorization: Bearer $IRV_BETA_KEY" \
   -H "Content-Type: application/json" \
   -d '{"agent_name":"manual-smoke","project_name":"Manual Smoke"}')
@@ -61,7 +61,7 @@ echo ""
 
 # --- 2. Verify token ---
 echo "[2/5] Verifying token..."
-ME=$(curl -sS "$IRV_HOST/api/v1/me" -H "Authorization: Bearer $PAT")
+ME=$(curl -sSL "$IRV_HOST/api/v1/me" -H "Authorization: Bearer $PAT")
 SCOPES=$(echo "$ME" | jq -r '.auth.scopes | join(",")')
 echo "  ✓ scopes: $SCOPES"
 echo ""
@@ -89,7 +89,7 @@ INGEST_BODY=$(jq -n \
   --arg pk "$PROJECT_KEY" \
   --arg ts "$TS_MS" \
   '{events:[{project_key:$pk, event:"manual_smoke", timestamp:($ts|tonumber), distinct_id:"manual", session_id:"manual-s1", properties:{source:"manual.sh"}}]}')
-curl -sS -X POST "$IRV_HOST/api/v1/ingest" \
+curl -sSL -X POST "$IRV_HOST/api/v1/ingest" \
   -H "Content-Type: application/json" -d "$INGEST_BODY" > /dev/null
 echo "  ✓ event sent: manual_smoke"
 echo ""
@@ -98,7 +98,7 @@ echo ""
 echo "[5/5] Polling freshness..."
 for i in 1 2 3 4 5 6 7 8 9 10; do
   sleep 2
-  FRESH=$(curl -sS "$IRV_HOST/api/v1/projects/$PROJECT_ID/events-freshness?since=2m" \
+  FRESH=$(curl -sSL "$IRV_HOST/api/v1/projects/$PROJECT_ID/events-freshness?since=2m" \
     -H "Authorization: Bearer $PAT")
   COUNT=$(echo "$FRESH" | jq -r .count)
   if [ "$COUNT" -ge 1 ] 2>/dev/null; then
