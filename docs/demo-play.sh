@@ -53,7 +53,7 @@ if [ "${TEASER:-0}" = "1" ]; then
   sleep 2
   scene_wake
   printf "\n%s\n\n" "${BOLD}  → irv.dev/agents${RESET}"
-  sleep 3
+  sleep 8 # tape stops recording mid-hold; see note at the main finale
   exit 0
 fi
 
@@ -91,8 +91,15 @@ scene_wake
 banner "5 · THE AGENT SHIPS THE FIX — AND IRV STARTS THE CLOCK"
 say "the payload carried the fix prompt; the agent applied it, then:"
 show 06-shipped.txt
-gap 5
+gap 4
 
-printf "\n\n%s\n" "${BOLD}      Detected by AI. Fixed by AI. Proven with statistics.${RESET}"
-printf "%s\n\n" "${CYAN}      → irv.dev/agents${RESET}"
-sleep 4
+# Finale gets its own cleared screen — same visual weight as the title
+# card, so the video unambiguously ENDS rather than petering out under
+# scene 5's scrollback.
+printf '\033[2J\033[H'
+printf "\n\n\n\n\n\n\n"
+printf "%s\n\n" "${BOLD}      Detected by AI.  Fixed by AI.  Proven with statistics.${RESET}"
+printf "%s\n" "${CYAN}      → irv.dev/agents${RESET}"
+# Long hold: the tape's Sleep ends the recording partway through this,
+# so the card is always the final frame (prompt never reappears).
+sleep 12
