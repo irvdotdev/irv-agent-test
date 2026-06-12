@@ -1,0 +1,18 @@
+  ━━ 14:00:42 · insight.created · ✓ signature verified
+     INFO · Launch-day spike: 120 visitors, all traffic today
+     fingerprint: 98e64f977bb9ea12
+  ━━ 14:00:42 · insight.created · ✓ signature verified
+     INFO · HackerNews converts 2.5× better than Direct traffic
+     fingerprint: bb7ccd510f4142f2
+  ━━ 14:00:42 · insight.created · ✓ signature verified
+     WARN · Zero untracked-click data despite 50 events fired
+     fingerprint: e05294f453b66e9d
+  ━━ 14:06:55 · insight.created · ✓ signature verified
+     INFO · Launch traffic doubled since last check: 238 visitors all today
+     fingerprint: a3e1fc3adbb1de14
+  ━━ 14:06:56 · insight.created · ✓ signature verified
+     INFO · Direct traffic 2.4× larger than HN but views-per-visit unknown
+     fingerprint: e4fb2ca68acefa2f
+  ━━ 14:06:56 · insight.created · ✓ signature verified
+     WARN · 50 events fired but zero clicked elements surfaced
+     fingerprint: 6e287e910a14aede

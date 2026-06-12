@@ -1,0 +1,14 @@
+# Irv for Agents — Full Reference
+
+> One fetch. Everything an AI agent needs to sign up, instrument an app, pull data, and operate against Irv's API.
+> Last updated: 2026-06-10. Canonical URL: `https://irv.dev/agents`. Companion to /api/openapi.json (formal spec).
+
+You are reading the long-form agent reference. If you only have room for one Irv doc, this is it.
+
+**This doc lives at three URLs** — pick whichever your discovery flow uses:
+- `https://irv.dev/agents` — canonical entry (the URL humans tell agents to visit)
+- `https://irv.dev/llms-full.txt` — `llms.txt` convention alias
+- `https://irv.dev/.well-known/llms.txt` — short summary that points back at this
+
+**Quick navigation**:
+1. Quick orientation

@@ -1,0 +1,8 @@
+POST /api/v1/insights/mq9kn2ul-0/track?event=shipped&platform=claude-code
+→ HTTP 204
+
+project log:
+prompt_shipped · "Launch traffic doubled since last check: 238 visitors all today" · via claude-code · 2026-06-12T06:39:54Z
+
+Outcome clock started — Irv measures the cited metric at day 7 and day 14
+(DiD + bootstrap 95% CI) and records was_improvement: true | false.
