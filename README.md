@@ -129,10 +129,6 @@ curl -sS -X POST "$IRV_HOST/api/v1/insights/refresh?project_key=$IRV_PROJECT_KEY
 
 The full scene-by-scene plan for filming this as the launch video: [docs/demo-script.md](docs/demo-script.md).
 
-## License
-
-MIT.
-
 ## The walkthrough video
 
 ![The closed loop in 30 seconds](docs/demo-teaser.gif)
@@ -140,3 +136,7 @@ MIT.
 Full ~2-minute cut: [docs/demo.mp4](docs/demo.mp4) — agent reads `irv.dev/agents` → provisions itself → instruments the app → Irv detects + fires HMAC-signed webhooks → agent ships the fix → outcome clock starts. **Every output shown is a real capture from the live rehearsal against prod** (see `docs/demo-assets/`); the player script paces them but invents nothing.
 
 Re-render after changes: `vhs docs/demo.tape && vhs docs/demo-teaser.tape` (needs `brew install vhs`).
+
+## License
+
+MIT.
