@@ -2,4 +2,4 @@
 @@ -19,6 +19,7 @@
            <script async src="https://irv.dev/i.js?p={project_key}" />
            tag. Don't add it manually — that's what we're testing.
-+        <script async src="https://irv.dev/i.js?p=pk_live_ae03edab9b07da1a815692643f84ce1b" />
++        <script async src="https://irv.dev/i.js?p=pk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />

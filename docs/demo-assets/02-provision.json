@@ -1,8 +1,8 @@
 {
   "pat": "f3a9…(redacted)",
-  "project_id": "prj_9475f5ca4e5190c6",
-  "project_key": "pk_live_ae03edab9b07da1a815692643f84ce1b",
+  "project_id": "prj_xxxxxxxxxxxxxxxx",
+  "project_key": "pk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "agent_id": "agent_f694202c589c347c",
-  "dashboard_url": "https://irv.dev/app/projects/prj_9475f5ca4e5190c6",
-  "snippet_html": "<script async src=\"https://irv.dev/i.js?p=pk_live_ae03edab9b07da1a815692643f84ce1b\"></script>"
+  "dashboard_url": "https://irv.dev/app/projects/prj_xxxxxxxxxxxxxxxx",
+  "snippet_html": "<script async src=\"https://irv.dev/i.js?p=pk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"></script>"
 }
